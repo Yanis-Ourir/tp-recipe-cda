@@ -1,0 +1,147 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Recipe Api",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "My recipe api"
+        }
+    ],
+    "paths": {
+        "/recipes": {
+            "get": {
+                "summary": "Get all the recipes of the database",
+                "operationId": "351b9c6a4226d4b52cb31499d16e09a7",
+                "responses": {
+                    "200": {
+                        "description": "List of all recipes"
+                    },
+                    "404": {
+                        "description": "Recipe list not found"
+                    }
+                }
+            }
+        },
+        "/recipe/{id}": {
+            "get": {
+                "summary": "Return the recipe with the matching ID",
+                "operationId": "a0848746d8e7d020d6ba16e8b5fbf27d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the recipe",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Find one recipe by its ID"
+                    },
+                    "404": {
+                        "description": "Recipe not found"
+                    }
+                }
+            }
+        },
+        "/recipe/add": {
+            "put": {
+                "summary": "Modify the matching recipe",
+                "operationId": "f472bb22ce360edf9bb1db50e026f053",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the recipe",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated recipe by its ID"
+                    },
+                    "404": {
+                        "description": "Recipe not found"
+                    }
+                }
+            }
+        },
+        "/recipe/modify/{id}": {
+            "post": {
+                "summary": "Modify the matching recipe",
+                "operationId": "c60ece48a16839c3bcedf734b2503ea6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the recipe",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated recipe by its ID"
+                    },
+                    "404": {
+                        "description": "Recipe not found"
+                    }
+                }
+            }
+        },
+        "/recipe/delete/{id}": {
+            "delete": {
+                "summary": "Delete the recipe with the matching ID",
+                "operationId": "bb660c64a591cc2c50f9b7a9ed627df9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the recipe",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted recipe by its ID"
+                    },
+                    "404": {
+                        "description": "Recipe not found"
+                    }
+                }
+            }
+        },
+        "/recipes/delete/all": {
+            "delete": {
+                "summary": "Delete all the recipes",
+                "operationId": "d18d7723f51a2f28f28b4233344e6ab2",
+                "responses": {
+                    "200": {
+                        "description": "Delete everything from the table recipe"
+                    },
+                    "404": {
+                        "description": "Recipe not found"
+                    }
+                }
+            }
+        }
+    }
+}
