@@ -15,10 +15,10 @@ class ImportRecipesFromCsv extends Importer
 
 
         $header = array_shift($csvData); // Supprimer header CSV;
-
+        
         foreach ($csvData as $rowData) {
             $recipeData = array_combine($header, $rowData);
-            $this->recipeRepository->addRecipe($recipeData);
+            $this->recipeRepository->add($recipeData);
         }
     }
 }

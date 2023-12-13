@@ -1,47 +1,26 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services;
 
-use App\Interfaces\RepositoryInterface;
 use App\Models\Ingredient;
 use App\Models\Recipe;
-use Illuminate\Http\Request;
 
-class RecipeRepository implements RepositoryInterface
-{
-    public function all(): Array
+class ImporterPersistanceMySql {
+    public function addRecipe(array $content): array //  Prends un tableau;
     {
-        $recipes = Recipe::all();
-        return $recipes->toArray(); 
-    }
-
-    // Trouve une recette par son ID
-    public function findById(?int $id): Array
-    {
-        $recipe = Recipe::find($id);
-        $ingredients = [];
-        foreach ($recipe->ingredients as $ingredient) {
-            $ingredients[] = $ingredient;
-        }
-        return $recipe->toArray();
-    }
-
-    // ADD recette
-    public function add(array $content): Array //  Prends un tableau;
-    {
-        if(gettype($content['ingredients']) === 'string') {
+        if (gettype($content['ingredients']) === 'string') {
             $ingredients = str_getcsv($content['ingredients']);
         } else {
             $ingredients = $content['ingredients'];
         }
-        
+
         $recipe = Recipe::create([
             'name' => $content['name'],
             'preparationTime' => $content['preparationTime'],
             'cookingTime' => $content['cookingTime'],
-            'serves' => $content['serves']  
+            'serves' => $content['serves']
         ]);
-     
+
         foreach ($ingredients as $ingredient) {
             $ingredientName[] = Ingredient::firstOrCreate(['name' => $ingredient]);
         }
@@ -54,7 +33,7 @@ class RecipeRepository implements RepositoryInterface
         return $recipe->toArray();
     }
 
-    public function update(?int $id, array $content): Array
+    public function updateRecipe(?int $id, array $content): array
     {
         $recipe = Recipe::find($id);
 
@@ -81,14 +60,14 @@ class RecipeRepository implements RepositoryInterface
     }
 
 
-    public function deleteById(?int $id)
+    public function deleteSelectedRecipe(?int $id)
     {
         $recipe = Recipe::find($id);
         $recipe->delete();
         return response("Deleted the recipe");
     }
 
-    public function deleteAll()
+    public function deleteAllRecipes()
     {
         Recipe::truncate();
         return response('Deleted all recipes');

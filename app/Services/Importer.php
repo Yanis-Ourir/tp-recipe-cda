@@ -2,13 +2,13 @@
 
 namespace App\Services;
 use App\Interfaces\ImporterInterface;
-use App\Repositories\RecipeRepository;
+use App\Interfaces\RepositoryInterface;
 
 
 abstract class Importer implements ImporterInterface {
-    protected RecipeRepository $recipeRepository;
+    protected RepositoryInterface $recipeRepository;
 
-    public function __construct(RecipeRepository $recipeRepository)
+    public function __construct(RepositoryInterface $recipeRepository)
     {
         $this->recipeRepository = $recipeRepository;
     }

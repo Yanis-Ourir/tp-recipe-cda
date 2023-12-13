@@ -2,12 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Interfaces\ImporterInterface;
-use App\Services\ImportRecipesFromCsv;
-use App\Services\ImportRecipesFromJson;
-use Database\Factories\ImporterFactory;
+use App\Services\Factories\ImporterFactory;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\App;
 
 class ImportJson extends Command
 {
@@ -27,7 +23,7 @@ class ImportJson extends Command
     protected $description = 'Import your file data into your SQL Database';
 
                                         //  la bonne classe en fonction du type du fichier;
-    public function __construct(protected ImportRecipesFromJson $insertData) // ImporterInterface $insertData
+    public function __construct(protected ImporterFactory $insertData) // ImporterInterface $insertData
     {
         parent::__construct();
         $this->insertData = $insertData;
@@ -39,12 +35,14 @@ class ImportJson extends Command
     {
         // IMPORTER LE JSON DANS MA BDD
         $fileType = pathinfo($this->argument('file'), PATHINFO_EXTENSION);
-        $importerClass = config('importer.' . $fileType);
-        dd($importerClass);
+        // $importerClass = config('importer.' . $fileType);
+      
+        // dd($importerClass);
  
-        $this->insertData = App::make($importerClass);
+        // $this->insertData = App::make($importerClass);
 
-        $this->insertData->insertFile($this->argument('file'));
+        // $this->insertData->insertFile($this->argument('file'));
+        $this->insertData->createImporter($fileType)->insertFile($this->argument('file'));
 
         $this->info('Success, you imported your file data into your SQL Database');
     }
