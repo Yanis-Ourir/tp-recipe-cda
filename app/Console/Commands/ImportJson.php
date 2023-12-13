@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Factories\ImporterFactory;
+use App\Interfaces\FactoryInterface;
 use Illuminate\Console\Command;
 
 class ImportJson extends Command
@@ -22,8 +22,8 @@ class ImportJson extends Command
      */
     protected $description = 'Import your file data into your SQL Database';
 
-                                        //  la bonne classe en fonction du type du fichier;
-    public function __construct(protected ImporterFactory $insertData) // ImporterInterface $insertData
+                                       
+    public function __construct(protected FactoryInterface $insertData) // On instancie l'interface dans ma commande, si jamais j'ai plusieurs factory
     {
         parent::__construct();
         $this->insertData = $insertData;

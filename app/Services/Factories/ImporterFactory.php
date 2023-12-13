@@ -2,12 +2,12 @@
 
 namespace App\Services\Factories;
 
+use App\Interfaces\FactoryInterface;
 use App\Interfaces\PersistanceInterface;
-use App\Interfaces\RepositoryInterface;
 use App\Services\Importer;
 
 
-class ImporterFactory {
+class ImporterFactory implements FactoryInterface {
 
     protected PersistanceInterface $persistanceInterface;
     
