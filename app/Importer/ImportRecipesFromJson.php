@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Importer;
 
-use App\Services\Importer;
+use App\Importer\Importer;
 use Illuminate\Support\Facades\File;
 
 class ImportRecipesFromJson extends Importer

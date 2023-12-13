@@ -1,7 +1,7 @@
 <?php
 
-use App\Services\ImportRecipesFromJson;
-use App\Services\ImportRecipesFromCsv;
+use App\Importer\ImportRecipesFromJson;
+use App\Importer\ImportRecipesFromCsv;
 
 return [
     'json' => ImportRecipesFromJson::class,

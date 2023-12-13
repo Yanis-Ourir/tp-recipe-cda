@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Importer;
 
 use App\Interfaces\PersistanceInterface;
 use App\Models\Ingredient;

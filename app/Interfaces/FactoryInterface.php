@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Interfaces;
-use App\Services\Importer;
+use App\Importer\Importer;
 
 interface FactoryInterface {
     public function createImporter($fileType) : Importer;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Importer;
 use App\Interfaces\ImporterInterface;
 use App\Interfaces\PersistanceInterface;
 use App\Interfaces\RepositoryInterface;

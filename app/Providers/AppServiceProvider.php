@@ -6,11 +6,11 @@ use App\Interfaces\FactoryInterface;
 use App\Interfaces\ImporterInterface;
 use App\Interfaces\RepositoryInterface;
 use App\Repositories\RecipeRepository;
-use App\Services\Importer;
+use App\Importer\Importer;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\PersistanceInterface;
-use App\Services\ImporterPersistanceMySql;
-use App\Services\Factories\ImporterFactory;
+use App\Importer\ImporterPersistanceMySql;
+use App\Importer\Factories\ImporterFactory;
 
 class AppServiceProvider extends ServiceProvider
 {

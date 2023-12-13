@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Factories;
+namespace App\Importer\Factories;
 
 use App\Interfaces\FactoryInterface;
 use App\Interfaces\PersistanceInterface;
-use App\Services\Importer;
+use App\Importer\Importer;
 
 
 class ImporterFactory implements FactoryInterface {
