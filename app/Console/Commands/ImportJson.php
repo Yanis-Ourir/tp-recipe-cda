@@ -35,13 +35,7 @@ class ImportJson extends Command
     {
         // IMPORTER LE JSON DANS MA BDD
         $fileType = pathinfo($this->argument('file'), PATHINFO_EXTENSION);
-        // $importerClass = config('importer.' . $fileType);
-      
-        // dd($importerClass);
- 
-        // $this->insertData = App::make($importerClass);
-
-        // $this->insertData->insertFile($this->argument('file'));
+   
         $this->insertData->createImporter($fileType)->insertFile($this->argument('file'));
 
         $this->info('Success, you imported your file data into your SQL Database');

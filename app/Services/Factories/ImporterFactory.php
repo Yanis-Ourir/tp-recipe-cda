@@ -4,33 +4,21 @@ namespace App\Services\Factories;
 
 use App\Interfaces\RepositoryInterface;
 use App\Services\Importer;
-use App\Services\ImportRecipesFromCsv;
-use App\Services\ImportRecipesFromJson;
+
 
 class ImporterFactory {
 
-    public function __construct(protected RepositoryInterface $recipeRepository)
+    protected RepositoryInterface $recipeRepository;
+    
+
+    public function __construct(RepositoryInterface $recipeRepository)
     {
         $this->recipeRepository = $recipeRepository;
     }
  
     public function createImporter($fileType) : Importer {
-
-        // try {
-        //     return $this->importerInterface;
-
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
-
-        switch ($fileType) {
-            case 'csv':
-                return new ImportRecipesFromCsv($this->recipeRepository);
-            case 'json':
-                return new ImportRecipesFromJson($this->recipeRepository);
-            default:
-                throw new \Exception('File type not supported');
-        }
+        $importerClass = config("importer.$fileType");
+        return new $importerClass($this->recipeRepository);
     }
 }
 
