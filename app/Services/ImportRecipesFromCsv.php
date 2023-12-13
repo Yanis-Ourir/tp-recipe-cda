@@ -18,7 +18,7 @@ class ImportRecipesFromCsv extends Importer
         
         foreach ($csvData as $rowData) {
             $recipeData = array_combine($header, $rowData);
-            $this->recipeRepository->add($recipeData);
+            $this->persistanceInterface->add($recipeData);
         }
     }
 }

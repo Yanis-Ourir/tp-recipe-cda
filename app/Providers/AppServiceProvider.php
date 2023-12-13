@@ -4,14 +4,11 @@ namespace App\Providers;
 
 use App\Interfaces\ImporterInterface;
 use App\Interfaces\RepositoryInterface;
-use App\Models\Recipe;
 use App\Repositories\RecipeRepository;
-use App\Services\Factories\ImporterFactory;
 use App\Services\Importer;
-use App\Services\ImportRecipesFromCsv;
-use App\Services\ImportRecipesFromJson;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\PersistanceInterface;
+use App\Services\ImporterPersistanceMySql;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +23,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(ImporterInterface::class, function() {
-            return new Importer(new RecipeRepository());
+            return new Importer(new PersistanceInterface());
+        });
+
+        $this->app->bind(PersistanceInterface::class, function() {
+            return new ImporterPersistanceMySql();
         });
     
     }

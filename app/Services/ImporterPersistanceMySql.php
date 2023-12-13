@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Interfaces\PersistanceInterface;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 
-class ImporterPersistanceMySql {
-    public function addRecipe(array $content): array //  Prends un tableau;
+class ImporterPersistanceMySql implements PersistanceInterface {
+
+    public function add(array $content): array //  Prends un tableau;
     {
         if (gettype($content['ingredients']) === 'string') {
             $ingredients = str_getcsv($content['ingredients']);
@@ -33,7 +35,7 @@ class ImporterPersistanceMySql {
         return $recipe->toArray();
     }
 
-    public function updateRecipe(?int $id, array $content): array
+    public function update(?int $id, array $content): array
     {
         $recipe = Recipe::find($id);
 
@@ -47,7 +49,6 @@ class ImporterPersistanceMySql {
             'preparationTime' => $content['preparationTime'],
             'cookingTime' => $content['cookingTime'],
             'serves' => $content['serves'],
-
         ]);
 
         foreach ($ingredientName as $ingredient) {
@@ -60,14 +61,14 @@ class ImporterPersistanceMySql {
     }
 
 
-    public function deleteSelectedRecipe(?int $id)
+    public function deleteById(?int $id)
     {
         $recipe = Recipe::find($id);
         $recipe->delete();
         return response("Deleted the recipe");
     }
 
-    public function deleteAllRecipes()
+    public function deleteAll()
     {
         Recipe::truncate();
         return response('Deleted all recipes');

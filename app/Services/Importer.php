@@ -2,15 +2,16 @@
 
 namespace App\Services;
 use App\Interfaces\ImporterInterface;
+use App\Interfaces\PersistanceInterface;
 use App\Interfaces\RepositoryInterface;
 
 
 abstract class Importer implements ImporterInterface {
-    protected RepositoryInterface $recipeRepository;
+    protected PersistanceInterface $persistanceInterface;
 
-    public function __construct(RepositoryInterface $recipeRepository)
+    public function __construct(PersistanceInterface $persistanceInterface)
     {
-        $this->recipeRepository = $recipeRepository;
+        $this->persistanceInterface = $persistanceInterface;
     }
 
     abstract public function insertFile($fileName): Void;

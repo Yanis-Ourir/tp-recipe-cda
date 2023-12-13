@@ -2,23 +2,25 @@
 
 namespace App\Services\Factories;
 
+use App\Interfaces\PersistanceInterface;
 use App\Interfaces\RepositoryInterface;
 use App\Services\Importer;
 
 
 class ImporterFactory {
 
-    protected RepositoryInterface $recipeRepository;
+    protected PersistanceInterface $persistanceInterface;
     
 
-    public function __construct(RepositoryInterface $recipeRepository)
+    public function __construct(PersistanceInterface $persistanceInterface)
     {
-        $this->recipeRepository = $recipeRepository;
+        $this->persistanceInterface = $persistanceInterface;
     }
- 
+    
+
     public function createImporter($fileType) : Importer {
         $importerClass = config("importer.$fileType");
-        return new $importerClass($this->recipeRepository);
+        return new $importerClass($this->persistanceInterface);
     }
 }
 

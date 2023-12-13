@@ -14,7 +14,7 @@ class ImportRecipesFromJson extends Importer
         $data = json_decode($data, true);
 
         foreach ($data['recipes'] as $recipe) {
-            $this->recipeRepository->add($recipe);
+            $this->persistanceInterface->add($recipe);
         }
     }
 }

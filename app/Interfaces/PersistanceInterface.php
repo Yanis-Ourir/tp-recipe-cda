@@ -3,8 +3,8 @@
 namespace App\Interfaces;
 
 interface PersistanceInterface {
-    public function addRecipe() : Array;
-    public function updateRecipe() : Array;
-    public function deleteRecipe() : Array;
-    public function deleteAllRecipes() : Array;
+    public function add(array $content) : Array;
+    public function update(?int $id, array $content) : Array;
+    public function deleteById(?int $id);
+    public function deleteAll();
 }
