@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\PersistanceInterface;
+use App\Interfaces\RepositoryInterface;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use App\Models\Recipe;
@@ -12,10 +14,12 @@ use OpenApi\Annotations\OpenApi as OA;
 
 class RecipeController extends Controller
 {
-    protected RecipeRepository $recipeRepository;
+    protected RepositoryInterface $repositoryInterface;
+    protected PersistanceInterface $persistanceInterface;
 
-    public function __construct(RecipeRepository $recipeRepository) {
-        $this->recipeRepository = $recipeRepository;
+    public function __construct(RepositoryInterface $repositoryInterface, PersistanceInterface $persistanceInterface) {
+        $this->repositoryInterface = $repositoryInterface;
+        $this->persistanceInterface = $persistanceInterface;
     }
 
     /**
@@ -42,7 +46,7 @@ class RecipeController extends Controller
 
     public function all()
     {
-        return $this->recipeRepository->allRecipe();
+        return $this->repositoryInterface->all();
 
     }
 
@@ -73,9 +77,9 @@ class RecipeController extends Controller
      * )
      */
 
-    public function get(?int $id)
+    public function findById(?int $id)
     {
-        return $this->recipeRepository->findRecipeById($id);
+        return $this->repositoryInterface->findById($id);
     }
 
     /**
@@ -105,11 +109,11 @@ class RecipeController extends Controller
      * )
      */
 
-    public function put(Request $request)
+    public function add(Request $request)
     {
         // ADD recette
        $data = $request->json()->all;
-       return $this->recipeRepository->addRecipe($data);
+       return $this->persistanceInterface->add($data);
     }
 
     /**
@@ -139,10 +143,10 @@ class RecipeController extends Controller
      * )
      */
 
-    public function post(Request $request, ?int $id)
+    public function update(Request $request, ?int $id)
     {
         $data = $request->json()->all();
-        return $this->recipeRepository->updateRecipe($id, $data);
+        return $this->persistanceInterface->update($id, $data);
     }
 
     /**
@@ -171,9 +175,9 @@ class RecipeController extends Controller
      *     ),
      * )
      */
-    public function delete(?int $id)
+    public function deleteById(?int $id)
     {
-        return $this->recipeRepository->deleteSelectedRecipe($id);
+        return $this->persistanceInterface->deleteById($id);
     }
 
 
@@ -197,6 +201,6 @@ class RecipeController extends Controller
 
     public function deleteAll()
     {
-        return $this->recipeRepository->deleteAllRecipes();
+        return $this->persistanceInterface->deleteAll();
     }
 }
