@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Interfaces\FactoryInterface;
+use App\Jobs\ProcessImportJob;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 
 class ImportJson extends Command
 {
@@ -12,8 +14,7 @@ class ImportJson extends Command
      *
      * @var string
      */
-    protected $signature = 'import:file 
-                            {file}';
+    protected $signature = 'import:file {file}';
 
     /**
      * The console command description.
@@ -22,22 +23,23 @@ class ImportJson extends Command
      */
     protected $description = 'Import your file data into your SQL Database';
 
-                                       
-    public function __construct(protected FactoryInterface $insertData) // On instancie l'interface dans ma commande, si jamais j'ai plusieurs factory
+    protected ProcessImportJob $processImport;
+
+    protected FactoryInterface $factoryInterface;
+
+    public function __construct(FactoryInterface $factoryInterface)  // On instancie l'interface dans ma commande, si jamais j'ai plusieurs factory
     {
         parent::__construct();
-        $this->insertData = $insertData;
+        $this->factoryInterface = $factoryInterface;
     }
+ 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        // IMPORTER LE JSON DANS MA BDD
-        $fileType = pathinfo($this->argument('file'), PATHINFO_EXTENSION);
-   
-        $this->insertData->createImporter($fileType)->insertFile($this->argument('file'));
-
+        $fileName = $this->argument('file');
+        ProcessImportJob::dispatch($this->factoryInterface, $fileName);
         $this->info('Success, you imported your file data into your SQL Database');
     }
 

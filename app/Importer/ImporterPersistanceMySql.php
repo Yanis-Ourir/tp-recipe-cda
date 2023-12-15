@@ -10,11 +10,8 @@ class ImporterPersistanceMySql implements PersistanceInterface {
 
     public function add(array $content): array //  Prends un tableau;
     {
-        if (gettype($content['ingredients']) === 'string') {
-            $ingredients = str_getcsv($content['ingredients']);
-        } else {
-            $ingredients = $content['ingredients'];
-        }
+        
+        gettype($content['ingredients']) === 'string' ? $ingredients = str_getcsv($content['ingredients']) : $ingredients = $content['ingredients'];
 
         $recipe = Recipe::create([
             'name' => $content['name'],

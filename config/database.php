@@ -118,8 +118,14 @@ return [
     | such as APC or Memcached. Laravel makes it easy to dig right in.
     |
     */
-
+    // How do i use redis for my worker queue ?
+    // https://stackoverflow.com/questions/61292803/how-do-i-use-redis-for-my-worker-queue
     'redis' => [
+        'driver' => 'redis',
+        'connection' => 'default',
+        'queue' => '{default}',
+        'retry_after' => 90,
+        'block_for' => 5,
 
         'client' => env('REDIS_CLIENT', 'phpredis'),
 
