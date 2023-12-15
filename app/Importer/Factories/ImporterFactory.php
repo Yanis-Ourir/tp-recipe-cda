@@ -20,7 +20,7 @@ class ImporterFactory implements FactoryInterface {
 
     public function createImporter($fileType) : Importer {
         $importerClass = config("importer.$fileType");
-        return new $importerClass($this->persistanceInterface);
+        return app($importerClass);
     }
 }
 
